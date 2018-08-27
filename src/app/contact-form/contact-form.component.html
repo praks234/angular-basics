@@ -1,0 +1,51 @@
+<form #f="ngForm" (ngSubmit)="submit(f)">
+  <div ngModelGroup="contact" #contactGroup="ngModelGroup">
+      <div *ngIf="!contactGroup.valid && contactGroup.touched">Invalid Form</div>
+      <div class="form-group">
+          <label for="firstName">First Name</label>
+          <input 
+            required minlength="3" pattern="prakhar" 
+            maxlength="10" ngModel #firstName="ngModel" 
+            name="firstName" (change)="log(firstName)" 
+            id="firstName" type="text" class="form-control"/>
+          <div class="alert alert-danger" *ngIf="!firstName.valid && firstName.touched">
+            <div *ngIf="firstName.errors.required">
+              First Name is required
+            </div>
+            <div *ngIf="firstName.errors.minlength">
+              First Name should at least be {{firstName.errors.minlength.requiredLength}} characters long.
+            </div>
+            <div *ngIf="firstName.errors.pattern">
+              First Name does not match the pattern.
+            </div>
+          </div>
+        </div>
+  </div>
+  <div class="form-group">
+    <label for="comment">Comment</label>
+    <textarea ngModel #comment="ngModel" rows="10" cols="30" id="comment" name="comment" class="form-control"></textarea>
+  </div>
+  <div class="form-group">
+    <label for="contactMethodDrop"> Contact Method Dropdown</label>
+    <select ngModel name="contactMethodDrop" id="contactMethodDrop" class="form-control">
+      <option value="">Select</option>
+      <!-- <option *ngFor="let option of contactMethods" [value]="option.id">{{option.name}}</option> -->
+      <!-- Use ngValue if you want to set an object as value -->
+      <option *ngFor="let option of contactMethods" [ngValue]="option">{{option.name}}</option>
+    </select>
+  </div>
+  <div class="radio" *ngFor="let method of contactMethods">
+    <label>
+      <input name="contactMethodRadio" type="radio" ngModel [value]="method.id">{{method.name}}
+    </label>
+  </div>  
+
+  <div class="checkbox">
+    <label>
+      <input name="isSubscribed" ngModel type="checkbox">Subscribe to mailing model
+    </label>
+  </div>
+
+  <p>{{f.value | json}}</p>
+  <button class="btn btn-primary" ngClass="{'btn-disable: !f.valid'}" [disabled]="!f.valid">Submit</button>
+</form>

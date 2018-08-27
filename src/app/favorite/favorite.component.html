@@ -1,0 +1,20 @@
+<style>
+  .glyphicon {
+    color: blue; 
+  }
+</style>
+<!-- <span class="glyphicon"
+  [class.glyphicon-star] = "isSelected"
+  [class.glyphicon-star-empty] = "!isSelected"  
+  (click) = "onClick()"
+></span> -->
+
+<!-- use ng-class for the above template -->
+
+<span class="glyphicon"
+  [ngClass]="{
+    'glyphicon-star': isSelected,
+    'glyphicon-star-empty': !isSelected
+  }"
+  (click) = "onClick()"
+></span>
